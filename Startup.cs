@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ScoreboardAPI.Data;
+using ScoreboardAPI.Models;
 
 namespace ScoreboardAPI
 {
@@ -25,7 +28,14 @@ namespace ScoreboardAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddDbContext<ScoreboardAPIContext>(options =>
+                    options.UseInMemoryDatabase("Records"));
+
             services.AddControllers();
+
+            /*services.AddDbContext<ScoreboardAPIContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ScoreboardAPIContext")));*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
